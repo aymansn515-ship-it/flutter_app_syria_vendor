@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "225848042220",
+    "project_id": "syria-pharmacy-ce885",
+    "storage_bucket": "syria-pharmacy-ce885.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225848042220:android:1da67313504fdf71397bc9",
+        "android_client_info": {
+          "package_name": "com.sixamtech.sixvalley.seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225848042220-6bpr48i5cvs6sbtff1dunn3s3v07odl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBplyJ244NfRt6Iik6OLQhzJsOmtWUOXTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225848042220-6bpr48i5cvs6sbtff1dunn3s3v07odl3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225848042220-r1hu9m0709q02ssahet2mg28fhkirbkj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.syriapharmacy.app",
+                "app_store_id": "6757405808"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225848042220:android:305fbf6e97a4b9cb397bc9",
+        "android_client_info": {
+          "package_name": "com.syriapharmacy.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225848042220-sngalch879kga020m0e5c9gtjj7s8kgl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.syriapharmacy.app",
+            "certificate_hash": "5f43b3b4b6c8b987cf25b421f60847c0c1072376"
+          }
+        },
+        {
+          "client_id": "225848042220-6bpr48i5cvs6sbtff1dunn3s3v07odl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBplyJ244NfRt6Iik6OLQhzJsOmtWUOXTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225848042220-6bpr48i5cvs6sbtff1dunn3s3v07odl3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225848042220-r1hu9m0709q02ssahet2mg28fhkirbkj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.syriapharmacy.app",
+                "app_store_id": "6757405808"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
