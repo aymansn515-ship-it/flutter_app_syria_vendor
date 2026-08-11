@@ -3,9 +3,9 @@ import 'package:syriacosmeticsmanger/utill/images.dart';
 import '../features/shop/domain/models/guideline_model.dart';
 
 class AppConstants {
-  static const String appName = 'Vendor App'; ///Flutter SDK 3.41.9
+  static const String appName = 'Seller Center'; ///Flutter SDK 3.41.9
   static const String appVersion = '16.2.1';
-  static const String companyName = '6Valley';
+  static const String companyName = 'Syria Cosmetics';
   static const bool demo = false;
   static const int imageQuality = 100;
 
