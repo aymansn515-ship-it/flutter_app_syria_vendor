@@ -112,8 +112,10 @@ class OngoingOrderWidget extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     children: [
                       OrderTypeButtonHeadWidget(
-                        color: Theme.of(context).colorScheme.error.withValues(alpha: 0.15),
-                        circleColor: Theme.of(context).colorScheme.error,
+                        color: const Color(0xFF8A2BE2).withValues(alpha: 0.15),  // ← هون
+                        circleColor: const Color(0xFF8A2BE2),
+                        // color: Theme.of(context).colorScheme.error.withValues(alpha: 0.15),
+                        // circleColor: Theme.of(context).colorScheme.error,
                         image: Images.pendingOrderCardIcon,
                         text: getTranslated('pending', context),
                         index: 1,
@@ -124,8 +126,10 @@ class OngoingOrderWidget extends StatelessWidget {
                       ),
 
                       OrderTypeButtonHeadWidget(
-                        color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.15),
-                        circleColor: Theme.of(context).colorScheme.tertiary,
+                        color: const Color(0xFFA04FC7).withValues(alpha: 0.15),   // ← هون
+                        circleColor: const Color(0xFFA04FC7),
+                        // color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.15),
+                        // circleColor: Theme.of(context).colorScheme.tertiary,
                         image: Images.packagingOrdersCardIcon,
                         text: getTranslated('processing', context),
                         index: 2,
@@ -136,8 +140,10 @@ class OngoingOrderWidget extends StatelessWidget {
                       ),
 
                       OrderTypeButtonHeadWidget(
-                        color: Theme.of(context).colorScheme.onTertiaryContainer.withValues(alpha: 0.15),
-                        circleColor: Theme.of(context).colorScheme.onTertiaryContainer,
+                        color: const Color(0xFF4FB8E8).withValues(alpha: 0.15),   // ← هون
+                        circleColor: const Color(0xFF4FB8E8),
+                        // color: Theme.of(context).colorScheme.onTertiaryContainer.withValues(alpha: 0.15),
+                        // circleColor: Theme.of(context).colorScheme.onTertiaryContainer,
                         image: Images.confirmOrderCardIcon,
                         text: getTranslated('confirmed', context),
                         index: 7,
@@ -148,8 +154,10 @@ class OngoingOrderWidget extends StatelessWidget {
                       ),
 
                       OrderTypeButtonHeadWidget(
-                        color: Theme.of(context).colorScheme.surfaceTint.withValues(alpha: 0.15),
-                        circleColor: Theme.of(context).colorScheme.surfaceTint,
+                        color: const Color(0xFF2E9FDE).withValues(alpha: 0.15),  // ← هون
+                        circleColor: const Color(0xFF2E9FDE),
+                        // color: Theme.of(context).colorScheme.surfaceTint.withValues(alpha: 0.15),
+                        // circleColor: Theme.of(context).colorScheme.surfaceTint,
                         image: Images.outForDeliveryCardIcon,
                         text: getTranslated('out_for_delivery', context),
                         index: 8,

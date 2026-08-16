@@ -132,7 +132,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     children: [
 
                       const SizedBox(height: Dimensions.paddingSizeSmall),
-                      OngoingOrderWidget(callback: widget.callback).animateSectionEntrance(index: 1),
+                       OngoingOrderWidget(callback: widget.callback).animateSectionEntrance(index: 1),
 
                       CompletedOrderWidget(callback: widget.callback).animateSectionEntrance(index: 2),
                       const SizedBox(height: Dimensions.paddingSizeSmall),

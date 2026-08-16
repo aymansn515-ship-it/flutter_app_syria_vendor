@@ -76,7 +76,8 @@ class CompletedOrderWidget extends StatelessWidget {
                 children: [
 
                   OrderTypeButtonWidget(
-                    color: Theme.of(context).colorScheme.onTertiaryContainer,
+                    color: const Color(0xFF4FB8E8),
+                    // color: Theme.of(context).colorScheme.onTertiaryContainer,
                     text: getTranslated('delivered', context),
                     index: 3,
                     numberOfOrder: delivered,
@@ -85,7 +86,8 @@ class CompletedOrderWidget extends StatelessWidget {
                   ),
 
                   OrderTypeButtonWidget(
-                    color: Theme.of(context).colorScheme.error,
+                    color: const Color(0xFF6A11CB),
+                    // color: Theme.of(context).colorScheme.error,
                     text: getTranslated('cancelled', context),
                     index: 6,
                     numberOfOrder: canceled,
@@ -94,8 +96,9 @@ class CompletedOrderWidget extends StatelessWidget {
                   ),
 
                   OrderTypeButtonWidget(
-                    color: Theme.of(context).textTheme.bodyLarge?.color ??
-                        Theme.of(context).primaryColor,
+                    color: const Color(0xFF4FB8E8),
+                    // color: Theme.of(context).textTheme.bodyLarge?.color ??
+                    //     Theme.of(context).primaryColor,
                     text: getTranslated('returned', context),
                     index: 4,
                     numberOfOrder: returned,
@@ -105,7 +108,8 @@ class CompletedOrderWidget extends StatelessWidget {
 
                   OrderTypeButtonWidget(
                     showBorder: false,
-                    color: Theme.of(context).colorScheme.error,
+                    color: const Color(0xFF3D0B7A),
+                    // color: Theme.of(context).colorScheme.error,
                     text: getTranslated('failed_title', context),
                     index: 5,
                     numberOfOrder: failed,
