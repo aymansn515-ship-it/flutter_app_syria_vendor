@@ -19,6 +19,10 @@ class DeliveryManOverViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.paddingSizeSmall,
+        vertical: Dimensions.paddingSizeSmall,
+      ),
       child: Consumer<DeliveryManController>(
         builder: (context, deliveryManProvider,_) {
           return Column(

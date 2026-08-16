@@ -88,124 +88,26 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                   Provider.of<ProductDetailsController>(context, listen: false).getProductDetails(widget.productModel!.id);
                   Provider.of<CategoryController>(context,listen: false).getCategoryList(context,null, 'en');
                 },
-                child: Column(children: [
-                  Expanded(child: SingleChildScrollView(
-                    child: Column(children: [
-                      _ProductWidget(productModel: widget.productModel).animateSectionEntrance(index: 1),
-                      const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.paddingSizeSmall,
+                  ),
+                  child: Column(children: [
+                    Expanded(child: SingleChildScrollView(
+                      child: Column(children: [
+                        _ProductWidget(productModel: widget.productModel).animateSectionEntrance(index: 1),
+                        const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                      TitleAndDescriptionWidget(
-                        translations: productDetailsController.productDetails?.translations ?? [],
-                        languageList: Provider.of<SplashController>(context, listen: false).configModel!.languageList ?? [],
-                        productModel: widget.productModel,
-                      ).animateSectionEntrance(index: 2),
-                      const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                        TitleAndDescriptionWidget(
+                          translations: productDetailsController.productDetails?.translations ?? [],
+                          languageList: Provider.of<SplashController>(context, listen: false).configModel!.languageList ?? [],
+                          productModel: widget.productModel,
+                        ).animateSectionEntrance(index: 2),
+                        const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                      /// General Information
-                      Container(
-                        padding: const EdgeInsets.all(Dimensions.paddingSizeMedium),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          boxShadow: [BoxShadow(
-                            offset: const Offset(0, 3),
-                            blurRadius: 8,
-                            color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
-                          )],
-                        ),
-                        child: Column(children: [
-                          _InformationTitleWidget(title: getTranslated('general_information', context)!),
-                          const SizedBox(height: Dimensions.paddingSizeMedium),
-
-                          if(widget.productModel!.productType == 'physical' && widget.productModel?.brand?.name != null)
-                            _InformationElementWidget(labelText: getTranslated('brand', context)!, infoText: widget.productModel?.brand?.name ?? ''),
-
-                          if(widget.productModel?.category != null && (widget.productModel?.category?.name?.isNotEmpty ?? false))
-                          _InformationElementWidget(labelText: getTranslated('category', context)!, infoText: widget.productModel?.category?.name ?? ''),
-
-                          _InformationElementWidget(
-                            labelText: getTranslated('product_type', context)!,
-                            infoText: '${getTranslated('${widget.productModel?.productType}', context)} ${widget.productModel?.productType == 'digital' ?
-                            '(${getTranslated('${widget.productModel?.digitalProductType}', context)})' : ''}',
-                          ),
-
-                          widget.productModel!.productType == 'physical' ?
-                          _InformationElementWidget(labelText: getTranslated('product_unit', context)!, infoText: widget.productModel?.unit ?? '') : const SizedBox(),
-
-                          widget.productModel!.productType == 'physical' ?
-                          _InformationElementWidget(
-                            labelText: getTranslated('current_stock', context)!,
-                            infoText: widget.productModel?.currentStock.toString() ?? '',
-                          ) : const SizedBox(),
-
-                          _InformationElementWidget(
-                            labelText: getTranslated('product_sku', context)!,
-                            infoText: widget.productModel?.code ?? '',
-                            showDivider: false,
-                          ),
-                        ]),
-                      ).animateSectionEntrance(index: 3),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
-
-
-                      /// Price Information
-                      Container(
-                        padding: const EdgeInsets.all(Dimensions.paddingSizeMedium),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          boxShadow: [BoxShadow(
-                            offset: const Offset(0, 3),
-                            blurRadius: 8,
-                            color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
-                          )],
-                        ),
-                        child: Column(children: [
-                          _InformationTitleWidget(title: getTranslated('price_information', context)!),
-                          const SizedBox(height: Dimensions.paddingSizeMedium),
-
-                          _InformationElementWidget(
-                            labelText: getTranslated('unit_price', context)!,
-                            infoText: widget.productModel?.unitPrice?.toString() ?? '',
-                            valueWithSign: true,
-                          ),
-
-
-                          if(widget.productModel?.taxVats != null && widget.productModel!.taxVats!.isNotEmpty && Provider.of<SplashController>(Get.context!, listen: false).configModel?.systemTaxType == 'product_wise' && Provider.of<SplashController>(Get.context!, listen: false).configModel?.systemTaxIncludeStatus == 0)
-                          _InformationElementWidget(
-                            labelText: getTranslated('tax', context)!,
-                            infoText: buildVatText(),
-                            isPercentage: false,
-                          ),
-
-                          widget.productModel!.productType == 'physical'?
-                          _InformationElementWidget(
-                            labelText: getTranslated('shipping_cost', context)!,
-                            infoText:  PriceConverter.convertPrice(context,  double.tryParse(widget.productModel?.shippingCost.toString() ?? '') ?? 0)  ,
-                          ) : const SizedBox(),
-
-                          if ((widget.productModel?.discount ?? 0) > 0 || (widget.productModel?.clearanceSale?.discountAmount ?? 0) > 0)
-                          isClearanceSaleActive ?
-                          _InformationElementWidget(
-                            labelText: getTranslated('discount', context)!,
-                            infoText: widget.productModel!.clearanceSale!.discountType == 'percentage'? widget.productModel!.clearanceSale!.discountAmount.toString() : '0',
-                            showDivider: false,
-                            isPercentage: widget.productModel!.clearanceSale!.discountType == 'percentage',
-                            valueWithSign: widget.productModel!.clearanceSale!.discountType == 'flat',
-                          ) :
-                          _InformationElementWidget(
-                            labelText: getTranslated('discount', context)!,
-                            infoText: widget.productModel!.discountType == 'percent'? widget.productModel!.discount.toString() : widget.productModel!.discount.toString(),
-                            valueWithSign : widget.productModel!.discountType == 'flat',
-                            isPercentage: widget.productModel!.discountType == 'percent',
-                            showDivider: false,
-                          ),
-                        ]),
-                      ).animateSectionEntrance(index: 4),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                      /// Variation
-                      if((widget.productModel?.variation?.isNotEmpty ?? false) || (widget.productModel?.digitalVariation?.isNotEmpty ?? false))...[
+                        /// General Information
                         Container(
-                          padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
+                          padding: const EdgeInsets.all(Dimensions.paddingSizeMedium),
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
                             boxShadow: [BoxShadow(
@@ -215,228 +117,331 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                             )],
                           ),
                           child: Column(children: [
-                            _InformationTitleWidget(title: getTranslated('variation', context)!),
+                            _InformationTitleWidget(title: getTranslated('general_information', context)!),
+                            const SizedBox(height: Dimensions.paddingSizeMedium),
+
+                            if(widget.productModel!.productType == 'physical' && widget.productModel?.brand?.name != null)
+                              _InformationElementWidget(labelText: getTranslated('brand', context)!, infoText: widget.productModel?.brand?.name ?? ''),
+
+                            if(widget.productModel?.category != null && (widget.productModel?.category?.name?.isNotEmpty ?? false))
+                            _InformationElementWidget(labelText: getTranslated('category', context)!, infoText: widget.productModel?.category?.name ?? ''),
+
+                            _InformationElementWidget(
+                              labelText: getTranslated('product_type', context)!,
+                              infoText: '${getTranslated('${widget.productModel?.productType}', context)} ${widget.productModel?.productType == 'digital' ?
+                              '(${getTranslated('${widget.productModel?.digitalProductType}', context)})' : ''}',
+                            ),
+
+                            widget.productModel!.productType == 'physical' ?
+                            _InformationElementWidget(labelText: getTranslated('product_unit', context)!, infoText: widget.productModel?.unit ?? '') : const SizedBox(),
+
+                            widget.productModel!.productType == 'physical' ?
+                            _InformationElementWidget(
+                              labelText: getTranslated('current_stock', context)!,
+                              infoText: widget.productModel?.currentStock.toString() ?? '',
+                            ) : const SizedBox(),
+
+                            _InformationElementWidget(
+                              labelText: getTranslated('product_sku', context)!,
+                              infoText: widget.productModel?.code ?? '',
+                              showDivider: false,
+                            ),
+                          ]),
+                        ).animateSectionEntrance(index: 3),
+                        const SizedBox(height: Dimensions.paddingSizeSmall),
+
+
+                        /// Price Information
+                        Container(
+                          padding: const EdgeInsets.all(Dimensions.paddingSizeMedium),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            boxShadow: [BoxShadow(
+                              offset: const Offset(0, 3),
+                              blurRadius: 8,
+                              color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
+                            )],
+                          ),
+                          child: Column(children: [
+                            _InformationTitleWidget(title: getTranslated('price_information', context)!),
+                            const SizedBox(height: Dimensions.paddingSizeMedium),
+
+                            _InformationElementWidget(
+                              labelText: getTranslated('unit_price', context)!,
+                              infoText: widget.productModel?.unitPrice?.toString() ?? '',
+                              valueWithSign: true,
+                            ),
+
+
+                            if(widget.productModel?.taxVats != null && widget.productModel!.taxVats!.isNotEmpty && Provider.of<SplashController>(Get.context!, listen: false).configModel?.systemTaxType == 'product_wise' && Provider.of<SplashController>(Get.context!, listen: false).configModel?.systemTaxIncludeStatus == 0)
+                            _InformationElementWidget(
+                              labelText: getTranslated('tax', context)!,
+                              infoText: buildVatText(),
+                              isPercentage: false,
+                            ),
+
+                            widget.productModel!.productType == 'physical'?
+                            _InformationElementWidget(
+                              labelText: getTranslated('shipping_cost', context)!,
+                              infoText:  PriceConverter.convertPrice(context,  double.tryParse(widget.productModel?.shippingCost.toString() ?? '') ?? 0)  ,
+                            ) : const SizedBox(),
+
+                            if ((widget.productModel?.discount ?? 0) > 0 || (widget.productModel?.clearanceSale?.discountAmount ?? 0) > 0)
+                            isClearanceSaleActive ?
+                            _InformationElementWidget(
+                              labelText: getTranslated('discount', context)!,
+                              infoText: widget.productModel!.clearanceSale!.discountType == 'percentage'? widget.productModel!.clearanceSale!.discountAmount.toString() : '0',
+                              showDivider: false,
+                              isPercentage: widget.productModel!.clearanceSale!.discountType == 'percentage',
+                              valueWithSign: widget.productModel!.clearanceSale!.discountType == 'flat',
+                            ) :
+                            _InformationElementWidget(
+                              labelText: getTranslated('discount', context)!,
+                              infoText: widget.productModel!.discountType == 'percent'? widget.productModel!.discount.toString() : widget.productModel!.discount.toString(),
+                              valueWithSign : widget.productModel!.discountType == 'flat',
+                              isPercentage: widget.productModel!.discountType == 'percent',
+                              showDivider: false,
+                            ),
+                          ]),
+                        ).animateSectionEntrance(index: 4),
+                        const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                        /// Variation
+                        if((widget.productModel?.variation?.isNotEmpty ?? false) || (widget.productModel?.digitalVariation?.isNotEmpty ?? false))...[
+                          Container(
+                            padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              boxShadow: [BoxShadow(
+                                offset: const Offset(0, 3),
+                                blurRadius: 8,
+                                color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
+                              )],
+                            ),
+                            child: Column(children: [
+                              _InformationTitleWidget(title: getTranslated('variation', context)!),
+                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                              if((widget.productModel?.variation?.isNotEmpty ?? false))
+                                ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index){
+                                    return _VariationWidget(physicalProduct: widget.productModel!.variation![index], productModel: widget.productModel);
+                                  },
+                                  separatorBuilder: (context, index) => Divider(height: 1, color: Theme.of(context).hintColor.withValues(alpha: 0.3), thickness: 1),
+                                  itemCount: widget.productModel!.variation!.length,
+                                ),
+
+                              if((widget.productModel?.digitalVariation?.isNotEmpty ?? false))
+                                ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index){
+                                    return _VariationWidget(digitalProduct: widget.productModel!.digitalVariation![index], productModel: widget.productModel, index: index);
+                                  },
+                                  separatorBuilder: (context, index) => Divider(height: 1, color: Theme.of(context).hintColor.withValues(alpha: 0.3), thickness: 1),
+                                  itemCount: widget.productModel!.digitalVariation!.length,
+                                ),
+                            ]),
+                          ),
+                          const SizedBox(height: Dimensions.paddingSizeSmall),
+                        ],
+
+
+                        // /// Description
+                        // if(widget.productModel?.details != null && widget.productModel!.details!.isNotEmpty)
+                        //   Consumer<ProductDetailsController>(
+                        //       builder: (context, productDetailsController, _) {
+                        //         return Container(
+                        //           padding: const EdgeInsets.only(top: Dimensions.paddingSizeMedium),
+                        //           decoration: BoxDecoration(
+                        //             color: Theme.of(context).cardColor,
+                        //             boxShadow: [BoxShadow(
+                        //               offset: const Offset(0, 3),
+                        //               blurRadius: 8,
+                        //               color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
+                        //             )],
+                        //           ),
+                        //           child: Column(children: [
+                        //
+                        //             Padding(
+                        //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeMedium),
+                        //               child: _InformationTitleWidget(title: getTranslated('description', context)!),
+                        //             ),
+                        //             const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                        //
+                        //             Padding(
+                        //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                        //               child: InkWell(
+                        //                 onTap: () {
+                        //                   if((widget.productModel?.details?.length ?? 0) > 300) {
+                        //                     productDetailsController.updateVisibleProductDescription(
+                        //                       widget.productModel?.details ?? '',
+                        //                       isInitialize: false,
+                        //                       isUpdate: true,
+                        //                     );
+                        //                   }
+                        //                 },
+                        //                 child: Html(
+                        //                   data: productDetailsController.visibleProductDescription,
+                        //                   style: {
+                        //                     "body": Style(
+                        //                       color: Theme.of(context).textTheme.bodyLarge?.color,
+                        //                       fontSize: FontSize.medium,
+                        //                     ),
+                        //                     "table": Style(
+                        //                       backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                        //                       padding: HtmlPaddings.zero,
+                        //                       margin: Margins.zero,
+                        //                     ),
+                        //                     "tr": Style(
+                        //                       border: const Border(bottom: BorderSide(color: Colors.grey)),
+                        //                     ),
+                        //                     "th": Style(
+                        //                       padding: HtmlPaddings.all(6),
+                        //                       backgroundColor: Colors.grey,
+                        //                       margin: Margins.zero,
+                        //                     ),
+                        //                     "td": Style(
+                        //                       padding: HtmlPaddings.all(6),
+                        //                       alignment: Alignment.topLeft,
+                        //                       margin: Margins.zero,
+                        //                     ),
+                        //                     "p": Style(
+                        //                       color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
+                        //                       fontSize: FontSize(Dimensions.fontSizeSmall),
+                        //                       fontWeight: FontWeight.w400,
+                        //                     ),
+                        //                   },
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ]),
+                        //         );
+                        //       }
+                        //   ),
+
+
+                        /// Meta SEO Information
+                        if((widget.productModel?.metaSeoInfo?.metaTitle?.isNotEmpty ?? false) || (widget.productModel?.metaSeoInfo?.metaDescription?.isNotEmpty ?? false))
+                          Column(children: [
+                            const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                            Container(
+                              padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                boxShadow: [BoxShadow(
+                                  offset: const Offset(0, 3),
+                                  blurRadius: 8,
+                                  color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
+                                )],
+                              ),
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+
+                                _InformationTitleWidget(title: getTranslated('product_seo_and_meta_data', context)!),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                                Text(widget.productModel?.metaSeoInfo?.metaTitle ?? getTranslated('meta_title_not_found', context)!, style: robotoMedium.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
+                                )),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                                Text(widget.productModel?.metaSeoInfo?.metaDescription ?? getTranslated('meta_description_not_found', context)!, style: robotoRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
+                                )),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                                if(widget.productModel?.metaSeoInfo?.imageFullUrl?.path?.isNotEmpty ?? false)
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).cardColor,
+                                          borderRadius: BorderRadius.circular(Dimensions.paddingEye),
+                                          border: Border.all(color: Colors.black.withValues(alpha: 0.05), width: 1)
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                                        child: CustomImageWidget(
+                                          image: widget.productModel?.metaSeoInfo?.imageFullUrl?.path ?? '',
+                                          width: Dimensions.paddingSizeRevenueBottom,
+                                          height: Dimensions.paddingSizeRevenueBottom,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )),
+
+                                const SizedBox(height: Dimensions.paddingSizeSmall),
+                              ]),
+                            ),
+                          ]),
+
+                        /// youtube video link
+                        if(widget.productModel?.videoUrl?.isNotEmpty ?? false)
+                          Column(children: [
                             const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                            if((widget.productModel?.variation?.isNotEmpty ?? false))
-                              ListView.separated(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index){
-                                  return _VariationWidget(physicalProduct: widget.productModel!.variation![index], productModel: widget.productModel);
-                                },
-                                separatorBuilder: (context, index) => Divider(height: 1, color: Theme.of(context).hintColor.withValues(alpha: 0.3), thickness: 1),
-                                itemCount: widget.productModel!.variation!.length,
+                            Container(
+                              padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                boxShadow: [BoxShadow(
+                                  offset: const Offset(0, 3),
+                                  blurRadius: 8,
+                                  color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
+                                )],
                               ),
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
 
-                            if((widget.productModel?.digitalVariation?.isNotEmpty ?? false))
-                              ListView.separated(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index){
-                                  return _VariationWidget(digitalProduct: widget.productModel!.digitalVariation![index], productModel: widget.productModel, index: index);
-                                },
-                                separatorBuilder: (context, index) => Divider(height: 1, color: Theme.of(context).hintColor.withValues(alpha: 0.3), thickness: 1),
-                                itemCount: widget.productModel!.digitalVariation!.length,
-                              ),
-                          ]),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeSmall),
-                      ],
+                                _InformationTitleWidget(title: getTranslated('product_video', context)!),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
+                                Text(widget.productModel?.metaSeoInfo?.metaTitle ?? getTranslated('youtube_video_link', context)!, style: robotoMedium.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
+                                )),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                      // /// Description
-                      // if(widget.productModel?.details != null && widget.productModel!.details!.isNotEmpty)
-                      //   Consumer<ProductDetailsController>(
-                      //       builder: (context, productDetailsController, _) {
-                      //         return Container(
-                      //           padding: const EdgeInsets.only(top: Dimensions.paddingSizeMedium),
-                      //           decoration: BoxDecoration(
-                      //             color: Theme.of(context).cardColor,
-                      //             boxShadow: [BoxShadow(
-                      //               offset: const Offset(0, 3),
-                      //               blurRadius: 8,
-                      //               color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
-                      //             )],
-                      //           ),
-                      //           child: Column(children: [
-                      //
-                      //             Padding(
-                      //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeMedium),
-                      //               child: _InformationTitleWidget(title: getTranslated('description', context)!),
-                      //             ),
-                      //             const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                      //
-                      //             Padding(
-                      //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
-                      //               child: InkWell(
-                      //                 onTap: () {
-                      //                   if((widget.productModel?.details?.length ?? 0) > 300) {
-                      //                     productDetailsController.updateVisibleProductDescription(
-                      //                       widget.productModel?.details ?? '',
-                      //                       isInitialize: false,
-                      //                       isUpdate: true,
-                      //                     );
-                      //                   }
-                      //                 },
-                      //                 child: Html(
-                      //                   data: productDetailsController.visibleProductDescription,
-                      //                   style: {
-                      //                     "body": Style(
-                      //                       color: Theme.of(context).textTheme.bodyLarge?.color,
-                      //                       fontSize: FontSize.medium,
-                      //                     ),
-                      //                     "table": Style(
-                      //                       backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
-                      //                       padding: HtmlPaddings.zero,
-                      //                       margin: Margins.zero,
-                      //                     ),
-                      //                     "tr": Style(
-                      //                       border: const Border(bottom: BorderSide(color: Colors.grey)),
-                      //                     ),
-                      //                     "th": Style(
-                      //                       padding: HtmlPaddings.all(6),
-                      //                       backgroundColor: Colors.grey,
-                      //                       margin: Margins.zero,
-                      //                     ),
-                      //                     "td": Style(
-                      //                       padding: HtmlPaddings.all(6),
-                      //                       alignment: Alignment.topLeft,
-                      //                       margin: Margins.zero,
-                      //                     ),
-                      //                     "p": Style(
-                      //                       color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
-                      //                       fontSize: FontSize(Dimensions.fontSizeSmall),
-                      //                       fontWeight: FontWeight.w400,
-                      //                     ),
-                      //                   },
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ]),
-                      //         );
-                      //       }
-                      //   ),
-
-
-                      /// Meta SEO Information
-                      if((widget.productModel?.metaSeoInfo?.metaTitle?.isNotEmpty ?? false) || (widget.productModel?.metaSeoInfo?.metaDescription?.isNotEmpty ?? false))
-                        Column(children: [
-                          const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                          Container(
-                            padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              boxShadow: [BoxShadow(
-                                offset: const Offset(0, 3),
-                                blurRadius: 8,
-                                color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
-                              )],
-                            ),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-
-                              _InformationTitleWidget(title: getTranslated('product_seo_and_meta_data', context)!),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              Text(widget.productModel?.metaSeoInfo?.metaTitle ?? getTranslated('meta_title_not_found', context)!, style: robotoMedium.copyWith(
-                                fontSize: Dimensions.fontSizeSmall,
-                                color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
-                              )),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              Text(widget.productModel?.metaSeoInfo?.metaDescription ?? getTranslated('meta_description_not_found', context)!, style: robotoRegular.copyWith(
-                                fontSize: Dimensions.fontSizeSmall,
-                                color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
-                              )),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              if(widget.productModel?.metaSeoInfo?.imageFullUrl?.path?.isNotEmpty ?? false)
-                                Container(
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        borderRadius: BorderRadius.circular(Dimensions.paddingEye),
-                                        border: Border.all(color: Colors.black.withValues(alpha: 0.05), width: 1)
+                                InkWell(
+                                  onTap: () => launchUrl(Uri.parse(widget.productModel?.videoUrl ?? ''), mode: LaunchMode.externalApplication),
+                                  child: Text(widget.productModel?.videoUrl ?? '',
+                                    style: titilliumRegular.copyWith(
+                                      color: Theme.of(context).colorScheme.outline,
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Theme.of(context).colorScheme.outline,
                                     ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
-                                      child: CustomImageWidget(
-                                        image: widget.productModel?.metaSeoInfo?.imageFullUrl?.path ?? '',
-                                        width: Dimensions.paddingSizeRevenueBottom,
-                                        height: Dimensions.paddingSizeRevenueBottom,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )),
-
-                              const SizedBox(height: Dimensions.paddingSizeSmall),
-                            ]),
-                          ),
-                        ]),
-
-                      /// youtube video link
-                      if(widget.productModel?.videoUrl?.isNotEmpty ?? false)
-                        Column(children: [
-                          const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                          Container(
-                            padding: const EdgeInsets.all(Dimensions.paddingSizeMedium).copyWith(bottom: Dimensions.paddingSizeExtraSmall),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              boxShadow: [BoxShadow(
-                                offset: const Offset(0, 3),
-                                blurRadius: 8,
-                                color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
-                              )],
-                            ),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-
-                              _InformationTitleWidget(title: getTranslated('product_video', context)!),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              Text(widget.productModel?.metaSeoInfo?.metaTitle ?? getTranslated('youtube_video_link', context)!, style: robotoMedium.copyWith(
-                                fontSize: Dimensions.fontSizeSmall,
-                                color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.80),
-                              )),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              InkWell(
-                                onTap: () => launchUrl(Uri.parse(widget.productModel?.videoUrl ?? ''), mode: LaunchMode.externalApplication),
-                                child: Text(widget.productModel?.videoUrl ?? '',
-                                  style: titilliumRegular.copyWith(
-                                    color: Theme.of(context).colorScheme.outline,
-                                    fontSize: Dimensions.fontSizeDefault,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeSmall),
+                                const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                            ]),
-                          ),
-                        ]),
+                              ]),
+                            ),
+                          ]),
 
 
-                    ]),
-                  )),
+                      ]),
+                    )),
 
-                  Container(
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      boxShadow: ThemeShadow.getShadow(context),
+                    Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        boxShadow: ThemeShadow.getShadow(context),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.fontSizeSmall,vertical: Dimensions.paddingSizeSmall),
+                      child: CustomButtonWidget(
+                        borderRadius: Dimensions.paddingSizeSmall,
+                        btnTxt: getTranslated('edit_product', context),
+                        backgroundColor: Theme.of(context).primaryColor,
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_)=> AddProductTabView(product: widget.productModel, fromHome: false))),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.fontSizeSmall,vertical: Dimensions.paddingSizeSmall),
-                    child: CustomButtonWidget(
-                      borderRadius: Dimensions.paddingSizeSmall,
-                      btnTxt: getTranslated('edit_product', context),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_)=> AddProductTabView(product: widget.productModel, fromHome: false))),
-                    ),
-                  ),
-                ]),
+                  ]),
+                ),
               );
             }
         );

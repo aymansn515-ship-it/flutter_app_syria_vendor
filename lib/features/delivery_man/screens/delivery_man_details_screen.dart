@@ -109,7 +109,7 @@ class _DeliveryManDetailsScreenState extends State<DeliveryManDetailsScreen> wit
                 controller: _tabController,
                 children: [
                   DeliveryManOverViewScreen(deliveryMan: widget.deliveryMan),
-                  DeliveryManOrderListScreen(deliveryMan: widget.deliveryMan),
+                   DeliveryManOrderListScreen(deliveryMan: widget.deliveryMan),
                   DeliveryManEarningListWidget(deliveryMan: widget.deliveryMan),
                   DeliveryManReviewListWidget(deliveryMan: widget.deliveryMan),
                   CollectedCashFromDeliveryManScreen(deliveryMan: widget.deliveryMan),
