@@ -579,8 +579,18 @@ class _CollapsibleAddressSectionState extends State<CollapsibleAddressSection>
                 Consumer<OrderDetailsController>(
                   builder:  (context, resProvider, child) {
                     return GestureDetector(onTap: (){
+                      // 👈 أول خطوة: نتأكد أن shippingAddressData مش null
+                      debugPrint('📍 Shipping Address:');
+                      debugPrint('   lat: ${widget.orderModel?.shippingAddressData?.latitude}');
+                      debugPrint('   lng: ${widget.orderModel?.shippingAddressData?.longitude}');
+
                       showDialog(context: context, builder: (_) {
                         BillingAddressData billingAddressData = resProvider.getAddressForMap(widget.orderModel!.shippingAddressData!, widget.orderModel!.billingAddressData);
+                        // 👈 ثاني خطوة: نتحقق من القيم اللي رح تنعرض بالخريطة فعلياً
+                        debugPrint('🗺️ Final Map Data:');
+                        debugPrint('   billingLat: ${billingAddressData.latitude}');
+                        debugPrint('   billingLng: ${billingAddressData.longitude}');
+
                         Provider.of<OrderDetailsController>(context, listen: false).setMarker(billingAddressData);
                         return  ShowOnMapDialogWidget(billingAddressData: billingAddressData);
                       });
@@ -590,7 +600,11 @@ class _CollapsibleAddressSectionState extends State<CollapsibleAddressSection>
                         const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                         Padding(
                           padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                          child: Image.asset(Images.showOnMap, width: Dimensions.iconSizeDefault)
+                          child:  Icon(
+                            Icons.map_outlined,  // نسخة outline (أخف)
+                            size: 18,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ]),
                     );

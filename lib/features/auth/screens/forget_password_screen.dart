@@ -50,6 +50,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     print('ForgotPasswordScreen build called');
     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    final splashController =
+    Provider.of<SplashController>(context, listen: false);
+
+
+    debugPrint('========================================');
+    debugPrint(
+      'FORGOT PASSWORD METHOD = ${configModel?.forgotPasswordVerification}',
+    );
+    debugPrint(
+      'COUNTRY CODE = ${configModel?.countryCode}',
+    );
+    debugPrint('========================================');
+
     return Scaffold(
 
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -64,9 +77,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Stack(
             children: [
         
-        const Positioned.fill(
-        child: LoginBackground(),
-            ),
+        // const Positioned.fill(
+        // child: LoginBackground(),
+        //     ),
         
         
         
@@ -79,9 +92,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 60, bottom: 20),
                 child: Image.asset(
-                  Images.logosmall,
-                  width: 90,
-                  height: 90,
+                  Images.logo,
+                  width: 130,
+                  height: 130,
                   fit: BoxFit.contain,
                 ),
               ),

@@ -63,6 +63,9 @@ class SplashController extends ChangeNotifier {
     bool isSuccess;
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _configModel = ConfigModel.fromJson(apiResponse.response!.data);
+      debugPrint(
+        'FORGOT PASSWORD METHOD = ${_configModel?.forgotPasswordVerification}',
+      );
       _baseUrls = ConfigModel.fromJson(apiResponse.response!.data).baseUrls;
       String? currencyCode = serviceInterface.getCurrency();
       for(CurrencyList currencyList in _configModel!.currencyList!) {

@@ -205,33 +205,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               child: DeliveryManContactInformationWidget(orderModel: orderDetailsController.orderDetails![0].order, orderType: orderDetailsController.orderDetails![0].order!.orderType, onlyDigital: _onlyDigital),
                             ).animateSectionEntrance(index: 7):const SizedBox(),
 
-                            // Container(padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault,
-                            //     Dimensions.paddingSizeDefault, Dimensions.paddingSizeDefault, 0),
-                            //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            //     Row(children: [
-                            //       SizedBox(width: 15, child: Image.asset(Images.orderSummery)),
-                            //       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                            //       Text(getTranslated('order_summery', context)!,
-                            //         style: titilliumSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                            //     ],
-                            //     ),
-                            //     const SizedBox(height: Dimensions.paddingSizeDefault,),
-                            //
-                            //     ListView.builder(
-                            //       padding: const EdgeInsets.all(0),
-                            //       shrinkWrap: true,
-                            //       physics: const NeverScrollableScrollPhysics(),
-                            //       itemCount: orderDetailsController.orderDetails!.length,
-                            //       itemBuilder: (context, index) {
-                            //         return OrderedProductListItemWidget(orderDetailsModel: orderDetailsController.orderDetails![index],
-                            //           paymentStatus: orderController.paymentStatus,orderId: widget.orderId,
-                            //           index: index, length: orderDetailsController.orderDetails!.length,
-                            //         );
-                            //       },
-                            //     ),
-                            //   ],
-                            //   ),
-                            // ),
+
 
 
                             /// bolling cummery section
@@ -575,7 +549,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 child: Text('${getTranslated('completed_service_picture', context)}',
                                   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).hintColor),)
                               ),
-
+                              //
                               SizedBox(height: 120,
                                 child: ListView.builder(
                                   itemCount: orderDetailsController.orderDetails![0].verificationImages?.length,

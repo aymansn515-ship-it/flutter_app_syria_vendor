@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syriacosmeticsmanger/core/animations/app_animations.dart';
 
 
-Color _primaryColor = const Color(0xFF1455AC);
+Color _primaryColor = const Color(0xFF2AAAF4);
 Color _secondaryColor = const Color(0xFFF58300);
 
 ThemeData dark = ThemeData(
